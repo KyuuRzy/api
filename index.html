@@ -3,33 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>API Documentation</title>
+<meta property="og:image" content="https://cdn.btch.bz/file/bf883f6c6704e63fd4e37.jpg">
+<title>kyuu Api's</title>
 <style>
+
   body {
+    border-radius: cover;
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #fcfcfc;
+    color: #333333;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
-  .container {
+.container {
     width: 100%;
     padding: 20px;
-    background-color: #fff;
+    background-color: #fcfcfc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
   }
+  
+  .container-l {
+    width: 100%;
+    padding: 20px;
+    background-color: #fcfcfc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+    .container-h {
+    width: 100%;
+    padding: 20px;
+    background-color: #fcfcfc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  .loading {
+    display: flex
+    
+  }
+  
+  .loading > div {
+    width: 2rem;
+    height: 2rem;
+    background-color: #ffd500;
+    margin: 1px;
+    border-radius: 50%;
+    top: 20px;
+    left: 20px;
+    animation: 1.5s bounce infinite ease-in-out;
+  }
+  
+
+  
   h1 {
     color: #007bff;
     text-align: center;
   }
+  
+  .copyright.h4 {
+   margin: 0, 20px, 1px, 0;
+  }
+  
   h2 {
     color: #343a40;
     margin-top: 20px;
+    margin-right: 100px;
+    position: static;
+    margin-bottom: 20px; /* Tambahkan jarak antara tabel */
+    text-align: auto;
+    
   }
   p {
     line-height: 1.6;
-    color: #6c757d;
+    color: #000000;
+    text-align: justify;
   }
   ul {
     list-style-type: none;
@@ -38,6 +98,7 @@
   }
   li {
     margin-bottom: 10px;
+    color: #333333;
   }
   pre {
     background-color: #f0f6ff;
@@ -46,59 +107,128 @@
     overflow-x: auto;
   }
   .btn-container {
-    margin-top: 20px;
+    margin: 20px 20px 30px 20px;
+    
+    border-radius: 50%;
   }
-  .btn {
-    display: block;
-    width: calc(100% - 40px);
-    margin: 0 auto;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.btn {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 0 auto 20px; /* Menambahkan margin ke bawah sebesar 20px */
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   .btn:hover {
     background-color: #0056b3;
   }
+  input[type="checkbox"]{
+    position: relative;
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background-color: #434343;
+    outline: none;
+    border-radius: 10px;
+    transision: .5s ease;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:checked{
+    background-color: #3664ffd;
+  }
+  input[type="checkbox"]::before{
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fcfcfc;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+  }
+  input[type="checkbox"]:checked::before{
+    transform: translateX(20px);
+  }
+  .dark {
+    background-color: #999999;
+    color: #33ffff;
+    
+  }
+  
+    @keyframes bounce {
+    0%, 80%, 100% {
+      transform: scale(0);}
+  40% {
+    transform: scale(1);
+  }
+ }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>API Documentation</h1>
+<div class="container-l">
+  <div class="loading">
+    <div class="dot-one"></div>
+        <div class="dot-two"></div>
+            <div class="dot-three"></div>
+            
+  </div>
+  <input type="checkbox" onclick = "ubahMode()">
+  <h1>KyuuRzy Api's | Docs</h1>
   <p>Welcome to the API documentation for our service. Below you will find information about the available endpoints and how to use them. I want to tell you something that this rest api was made from start to finish by GPT chat and I think that is very cool</p>
   
+  <div class="container">
   <h2>Endpoints</h2>
+  <div class="container-h">
+    <h1>Artificial Intelegence</h1>
   <div class="btn-container">
-    <a href="/api/ragbot?message=hai" class="btn">Try /api/ragbot</a>
-    <a href="/api/degreeguru?message=hai" class="btn">Try /api/degreeguru</a>
-    <a href="/api/pinecone?message=hai" class="btn">Try /api/pinecone</a>
-    <a href="/api/smartcontract?message=hai" class="btn">Try /api/smartcontract</a>
-    <a href="/api/blackboxAIChat?message=hai" class="btn">Try /api/blackboxAIChat</a>
+    <a href="/api/ragbot?message=hai" class="btn">RagBot Ai</a>
+    <a href="/api/degreeguru?message=hai" class="btn">Degreeguru ai</a>
+    <a href="/api/pinecone?message=hai" class="btn">Pinecone Aio</a>
+    <a href="/api/smartcontract?message=hai" class="btn">Smartcontract Ai</a>
+    <a href="/api/blackboxAIChat?message=hai" class="btn">BlackBox Ai</a>
+    </div>
+    </div>
+      <div class="container-h">
+    <h1>in development</h1>
+  <div class="btn-container">
+    <a href="/api/ragbot?message=hai" class="btn">coming soom</a>
+
+    </div>
   </div>
-  
-  <h2>Usage</h2>
-  <p>To use the endpoints, send a GET request to the desired endpoint with the following query parameter:</p>
-  <ul>
-    <li>message: Your message content</li>
-  </ul>
-  
-  <h2>Response</h2>
-  <p>The response will be in JSON format with the following structure:</p>
-  <pre>
-  {
-    "status": 200,
-    "creator": "ChatGPT",
-    "data": {
-      "response": "Response data here"
-    }
-  }
-  </pre>
 </div>
+<div class="page-section bg-light">
+      <div class="container">
+        <div class="owl-carousel wow fadeInUp" id="testimonials">
+          <div class="item">
+            <div class="row align-items-center">
+              <div class="col-md-6 py-3">
+                <div class="testi-image">
+                  <img src="../assets/img/person/person_1.jpg" alt="">
+                </div>
+              </div>
+              <div class="col-md-6 py-3">
+                <div class="testi-content">
+                  <p>Umur saya 18 tahun, saya hanya seorang pemula yang sedang belajar, dan ingin sukses dengan cara saya sendiri, saya masih membutuhkan bimbingan dari kalian, saya berasal dari Makassar , Sulawesi Selatan</p>
+                  <div class="entry-footer">
+                    <strong>KyuuRzy</strong> &mdash; <span class="text-grey">Developer</span>
+                  </div>
+
+          <p id="copyright">&copy; 𝟮𝟬𝟮𝟰 <a href="https://www.youtube.com/@YTKyuuTense">𝘒𝘺𝘶𝘶𝘙𝘻𝘺 𝘋𝘦𝘷</a>. 𝘈𝘭𝘭 𝘳𝘪𝘨𝘩𝘵𝘴 𝘳𝘦𝘴𝘦𝘳𝘷𝘦𝘥</p>
+  <script>
+     function ubahMode() {
+       const ubah = document.body;
+       ubah.classList.toggle("dark");
+     
+     }
+    
+  </script>
 </body>
-</html>
+  </html>
+  
