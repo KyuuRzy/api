@@ -191,11 +191,7 @@ app.get('/api/smartcontract', async (req, res) => {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
     const response = await smartContract(message);
-    res.status(200).json({
-      status: 200,
-      creator: "KyuuRzy",
-      data: { response }
-    });
+    res.status(200).json({{ response }});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
