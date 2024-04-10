@@ -126,7 +126,7 @@ app.get('/api/Lirik', async (req, res) => {
     if (!message) {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
-    const response = await Lirics(judul);
+    const response = await lirics(judul);
     res.status(200).json({
       status: 200,
       creator: "KyuuRzy",
