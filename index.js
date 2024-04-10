@@ -16,7 +16,7 @@ app.set("json spaces", 2);
 app.use(cors());
 
 // Fungsi Untuk Bing Image
-class BingApi {
+async function BingApi {
   constructor(cookie) {
     this.cookie = cookie;
     this.headers = {
