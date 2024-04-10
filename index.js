@@ -30,7 +30,7 @@ async function BingApi {
       'Sec-Fetch-Mode': 'navigate',
       'Sec-Fetch-Site': 'same-origin',
       'Sec-Fetch-User': '?1',
-      Cookie: `_U=${cookie};`,
+      Cookie: `_U=1o0gOAFjeuOfJGlzAx7CV-wDu6tv3Q1pbvjc3KbaXLiDaGQnJYmz;`,
       'X-Forwarded-For': `20.${this.getRandomNum()}.${this.getRandomNum()}.${this.getRandomNum()}`,
     };
   }
