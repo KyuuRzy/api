@@ -15,27 +15,32 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-// Fungsi Untuk Bing Image
-async function BingApi {
-  constructor(cookie) {
-    this.cookie = cookie;
-    this.headers = {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0',
-      Accept:
-        'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.5',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Alt-Used': 'www.bing.com',
-      'Upgrade-Insecure-Requests': '1',
-      'Sec-Fetch-Dest': 'document',
-      'Sec-Fetch-Mode': 'navigate',
-      'Sec-Fetch-Site': 'same-origin',
-      'Sec-Fetch-User': '?1',
-      Cookie: `_U=1o0gOAFjeuOfJGlzAx7CV-wDu6tv3Q1pbvjc3KbaXLiDaGQnJYmz;`,
-      'X-Forwarded-For': `20.${this.getRandomNum()}.${this.getRandomNum()}.${this.getRandomNum()}`,
-    };
-  }
+// Fungsi Untuk Lirik
+async function lirik = (judul) => {
+	return new Promise(async (resolve, reject) => {
+		axios.get('https://www.musixmatch.com/search/' + judul)
+			.then(async ({
+				data
+			}) => {
+				const $ = cheerio.load(data)
+				const hasil = {};
+				let limk = 'https://www.musixmatch.com'
+				const link = limk + $('div.media-card-body > div > h2').find('a').attr('href')
+				await axios.get(link)
+					.then(({
+						data
+					}) => {
+						const $$ = cheerio.load(data)
+						hasil.thumb = 'https:' + $$('div.col-sm-1.col-md-2.col-ml-3.col-lg-3.static-position > div > div > div').find('img').attr('src')
+						$$('div.col-sm-10.col-md-8.col-ml-6.col-lg-6 > div.mxm-lyrics').each(function(a, b) {
+							hasil.lirik = $$(b).find('span > p > span').text() + '\n' + $$(b).find('span > div > p > span').text()
+						})
+					})
+				resolve(hasil)
+			})
+			.catch(reject)
+	})
+} 
 
 // Fungsi untuk ragBot
 async function ragBot(message) {
@@ -112,13 +117,13 @@ async function blackboxAIChat(message) {
 }
 
 // Endpoint BingApi
-app.get('/api/BingApi', async (req, res) => {
+app.get('/api/Lirik', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
-    const response = await BingApi(message);
+    const response = await Lirik(message);
     res.status(200).json({
       status: 200,
       creator: "KyuuRzy",
