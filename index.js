@@ -11,38 +11,24 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-function lirics(judul) {
-  return new Promise(async (resolve, reject) => {
-    axios
-      .get("https://www.musixmatch.com/search/" + judul)
-      .then(async ({ data }) => {
-        const $ = cheerio.load(data);
-        const hasil = {};
-        let limk = "https://www.musixmatch.com/";
-        const link =
-          limk + $("div.media-card-body > div > h2").find("a").attr("href");
-        await axios.get(link).then(({ data }) => {
-          const $$ = cheerio.load(data);
-          hasil.thumb =
-            "https:" +
-            $$(
-              "div.col-sm-1.col-md-2.col-ml-3.col-lg-3.static-position > div > div > div",
-            )
-              .find("img")
-              .attr("src");
-          $$("div.col-sm-10.col-md-8.col-ml-6.col-lg-6 > div.mxm-lyrics").each(
-            function (a, b) {
-              hasil.lirik =
-                $$(b).find("span > p > span").text() +
-                "\n" +
-                $$(b).find("span > div > p > span").text();
-            },
-          );
-        });
-        resolve(hasil);
-      })
-      .catch(reject);
-  });
+function quotes(input) {
+	return new Promise((resolve, reject) => {
+		fetch('https://jagokata.com/kata-bijak/kata-' + input.replace(/\s/g, '_') + '.html?page=1')
+			.then(res => res.text())
+			.then(res => {
+				const $ = cheerio.load(res)
+				data = []
+				$('div[id="main"]').find('ul[id="citatenrijen"] > li').each(function (index, element) {
+					x = $(this).find('div[class="citatenlijst-auteur"] > a').text().trim()
+					y = $(this).find('span[class="auteur-beschrijving"]').text().trim()
+					z = $(element).find('q[class="fbquote"]').text().trim()
+					data.push({ author: x, bio: y, quote: z })
+				})
+				data.splice(2, 1)
+				if (data.length == 0) return resolve({ creator: '@neoxr - Wildan Izzudin & @ariffb.id - Ariffb', status: false })
+				resolve({ creator: '@neoxr - Wildan Izzudin & @ariffb.id - Ariffb', status: true, data })
+			}).catch(reject)
+	})
 }
 
 // Fungsi untuk ragBot
@@ -126,7 +112,7 @@ app.get('/api/Lirik', async (req, res) => {
     if (!message) {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
-    const response = await lirics(message);
+    const response = await quotes(message);
     res.status(200).json({
       status: 200,
       creator: "KyuuRzy",
