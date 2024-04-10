@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const axios = require('axios');
 const bing = require("bing-scraper");
+const bingUrl = 'https://www.bing.com';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,22 +14,26 @@ app.set("json spaces", 2);
 app.use(cors());
 
 // Fungsi Untuk Bing Image
-async function bingImage(query) {
-  return new Promise((resolve, reject) => {
-    bing.imageSearch({ q: query, enforceLanguage: true }, function (err, resp) {
-      if (err) {
-        console.log(err);
-      } else {
-        const result = {
-          status: 200,
-          author: "David132",
-          ...resp,
-        };
-        resolve(result);
-      }
-    });
-  });
-}
+async function BingApi {
+  constructor(cookie) {
+    this.cookie = cookie;
+    this.headers = {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0',
+      Accept:
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.5',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Alt-Used': 'www.bing.com',
+      'Upgrade-Insecure-Requests': '1',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'same-origin',
+      'Sec-Fetch-User': '?1',
+      Cookie: `_U=${cookie};`,
+      'X-Forwarded-For': `20.${this.getRandomNum()}.${this.getRandomNum()}.${this.getRandomNum()}`,
+    };
+  }
 
 // Fungsi untuk ragBot
 async function ragBot(message) {
@@ -104,8 +109,8 @@ async function blackboxAIChat(message) {
   }
 }
 
-// Endpoint untuk smartContract
-app.get('/api/bingimage', async (req, res) => {
+// Endpoint BingApi
+app.get('/api/BingApi', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
