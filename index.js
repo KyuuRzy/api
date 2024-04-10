@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const axios = require('axios');
+const bing = require("bing-scraper");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,6 +11,24 @@ app.set("json spaces", 2);
 
 // Middleware untuk CORS
 app.use(cors());
+
+// Fungsi Untuk Bing Image
+async function bingImage(query) {
+  return new Promise((resolve, reject) => {
+    bing.imageSearch({ q: query, enforceLanguage: true }, function (err, resp) {
+      if (err) {
+        console.log(err);
+      } else {
+        const result = {
+          status: 200,
+          author: "David132",
+          ...resp,
+        };
+        resolve(result);
+      }
+    });
+  });
+}
 
 // Fungsi untuk ragBot
 async function ragBot(message) {
@@ -84,6 +103,24 @@ async function blackboxAIChat(message) {
     throw error;
   }
 }
+
+// Endpoint untuk smartContract
+app.get('/api/bingimage', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+    }
+    const response = await bingImage(message);
+    res.status(200).json({
+      status: 200,
+      creator: "KyuuRzy",
+      data: { response }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Endpoint untuk servis dokumen HTML
 app.get('/', (req, res) => {
