@@ -11,7 +11,7 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-async function lirics(judul) {
+function lirics(judul) {
   return new Promise(async (resolve, reject) => {
     axios
       .get("https://www.musixmatch.com/search/" + judul)
