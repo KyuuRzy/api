@@ -118,7 +118,7 @@ app.get('/api/BingApi', async (req, res) => {
     if (!message) {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
-    const response = await bingImage(message);
+    const response = await BingApi(message);
     res.status(200).json({
       status: 200,
       creator: "KyuuRzy",
