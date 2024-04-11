@@ -20,7 +20,7 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-function remini = (imageData, operation) => {
+function remini(imageData, operation) {
     return new Promise(async (resolve, reject) => {
         const availableOperations = ["enhance", "recolor", "dehaze"];
         if (availableOperations.includes(operation)) {
