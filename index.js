@@ -38,13 +38,13 @@ function ssweb(url, device = 'desktop') {
                     }).then(({ data }) => {
                         result = {
                             status: 200,
-                            author: author,
+                            author: "KyuuRzy",
                             result: data
                         }
                          resolve(result)
                     })
                } else {
-                    reject({ status: 404, author: author, message: data.data })
+                    reject({ status: 404, author: "KyuuRzy", message: data.data })
                }
           }).catch(reject)
      })
@@ -172,18 +172,18 @@ async function blackboxAIChat(message) {
 // Endpoint PinVideo
 app.get('/api/ssweb', async (req, res) => {
   try {
-    const message = req.query.message;
+    const url = req.query.url;
     if (!message) {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
-    const response = await ssweb(message);
+    const response = await ssweb(url);
     res.status(200).json({
       status: 200,
       creator: "Hyuu",
       data: { response }
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.url });
   }
 });
 
