@@ -16,6 +16,43 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+function nekopoi(url) {
+    return new Promise((resolve, reject) => {
+    const hasil = {}
+    axios.get(url)
+    .then((res) => {
+        const $ = cheerio.load(res.data)
+hasil.thumb = $('#content > div.animeinfos > div.imgdesc > img').attr('src')
+hasil.synopsis = $('#content > div.animeinfos > div.imgdesc > span > p').text()
+hasil.visitor_count = $('#content > div.animeinfos > div.tabulasi > div:nth-child(3)').text()
+hasil.judul_jp = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(1)').text()
+hasil.type = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(2)').text()
+hasil.jmlh_epsd = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(3)').text()
+hasil.status = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(4)').text()
+hasil.publish = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(5)').text()
+hasil.judul = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(6)').text()
+hasil.genre = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(7)').text()
+hasil.duration = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(8)').text()
+hasil.rating = $('#content > div.animeinfos > div.listinfo > ul > li:nth-child(9)').text()
+hasil.episode_url = [];                 
+})
+      axios.get(url)
+        .then(({
+           data
+        }) => {
+            const $ = cheerio.load(data)
+            $('#content > div.animeinfos > div.episodelist > ul > li').each(function(a, b) {
+            result = {
+            title: $(b).find('> span.leftoff > a').text(),
+            epsd_url: $(b).find('> span.leftoff > a').attr('href')
+            }            
+            hasil.episode_url.push(result)
+            })
+resolve(hasil)
+})
+})
+}
+
 function quotes(input) {
     return new Promise((resolve, reject) => {
         fetch('https://jagokata.com/kata-bijak/kata-' + input.replace(/\s/g, '_') + '.html?page=1')
@@ -343,6 +380,24 @@ app.get('/api/toanime', async (req, res) => {
      status: 200,
       creator: "KyuuRzy",
       data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/nekopoi', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await nekopoi(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { hasil } 
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
