@@ -12,23 +12,27 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-function quotes(input) {
-	return new Promise((resolve, reject) => {
-		fetch('https://jagokata.com/kata-bijak/kata-' + input.replace(/\s/g, '_') + '.html?page=1')
-			.then(res => res.text())
-			.then(res => {
-				const $ = cheerio.load(res)
-				data = []
-				$('div[id="main"]').find('ul[id="citatenrijen"] > li').each(function (index, element) {
-					x = $(this).find('div[class="citatenlijst-auteur"] > a').text().trim()
-					y = $(this).find('span[class="auteur-beschrijving"]').text().trim()
-					z = $(element).find('q[class="fbquote"]').text().trim()
-					data.push({ author: x, bio: y, quote: z })
-				})
-				data.splice(2, 1)
-				if (data.length == 0) return resolve({ creator: '@neoxr - Wildan Izzudin & @ariffb.id - Ariffb', status: false })
-				resolve({})}).catch(reject)
-	})
+async function fetchDoods(url) {
+    return new Promise(async (resolve, reject) => {
+        const base_url = "https://api.hunternblz.com/doodstream";
+        try {
+            const { data } = await axios.post(
+                base_url,
+                {
+                    pesan: "API+INI+BEBAS+DIPAKAI",
+                    url,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    },
+                }
+            );
+            resolve(data);
+        } catch (error) {
+            reject(error.response.data);
+        }
+    });
 }
 
 // Fungsi untuk ragBot
@@ -106,13 +110,13 @@ async function blackboxAIChat(message) {
 }
 
 // Endpoint BingApi
-app.get('/api/Lirik', async (req, res) => {
+app.get('/api/doodstream', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
-    const response = await quotes(message);
+    const response = await fetchDoods(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
