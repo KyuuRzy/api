@@ -16,6 +16,26 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+function quotes(input) {
+    return new Promise((resolve, reject) => {
+        fetch('https://jagokata.com/kata-bijak/kata-' + input.replace(/\s/g, '_') + '.html?page=1')
+            .then(res => res.text())
+            .then(res => {
+                const $ = cheerio.load(res)
+                data = []
+                $('div[id="main"]').find('ul[id="citatenrijen"] > li').each(function (index, element) {
+                    x = $(this).find('div[class="citatenlijst-auteur"] > a').text().trim()
+                    y = $(this).find('span[class="auteur-beschrijving"]').text().trim()
+                    z = $(element).find('q[class="fbquote"]').text().trim()
+                    data.push({ author: x, bio: y, quote: z })
+                })
+                data.splice(2, 1)
+                if (data.length == 0) return resolve({ creator: 'stikerin', status: false })
+                resolve({ creator: 'stikerin', status: true, data })
+            }).catch(reject)
+    })
+}
+
 async function twitter(link){
 	return new Promise((resolve, reject) => {
 let config = {
@@ -265,6 +285,24 @@ app.get('/api/twtdl', async (req, res) => {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
     const response = await twitter(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/quotes', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await quotes(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
