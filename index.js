@@ -12,27 +12,9 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-async function fetchDoods(url) {
-    return new Promise(async (resolve, reject) => {
-        const base_url = "https://api.hunternblz.com/doodstream";
-        try {
-            const { data } = await axios.post(
-                base_url,
-                {
-                    pesan: "API+INI+BEBAS+DIPAKAI",
-                    url,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    },
-                }
-            );
-            resolve(data);
-        } catch (error) {
-            reject(error.response.data);
-        }
-    });
+async function spotify(url){
+const res=await fetch('https://api.spotify-downloader.com/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'link='+url})
+return res.json();
 }
 
 // Fungsi untuk ragBot
@@ -116,7 +98,7 @@ app.get('/api/doodstream', async (req, res) => {
     if (!message) {
       return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
     }
-    const response = await fetchDoods(message);
+    const response = await spotify(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
