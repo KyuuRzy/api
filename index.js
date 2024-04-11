@@ -115,7 +115,9 @@ app.get('/api/Lirik', async (req, res) => {
     }
     const response = await quotes(message);
     res.status(200).json({
-     { response } 
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
