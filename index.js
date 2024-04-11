@@ -16,6 +16,28 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+function lirik(judul){
+	return new Promise(async(resolve, reject) => {
+   		axios.get('https://www.musixmatch.com/search/' + judul)
+   		.then(async({ data }) => {
+   		const $ = cheerio.load(data)
+   		const hasil = {};
+   		let limk = 'https://www.musixmatch.com'
+   		const link = limk + $('div.media-card-body > div > h2').find('a').attr('href')
+	   		await axios.get(link)
+	   		.then(({ data }) => {
+		   		const $$ = cheerio.load(data)
+		   		hasil.thumb = 'https:' + $$('div.col-sm-1.col-md-2.col-ml-3.col-lg-3.static-position > div > div > div').find('img').attr('src')
+		  		$$('div.col-sm-10.col-md-8.col-ml-6.col-lg-6 > div.mxm-lyrics').each(function(a,b) {
+		   hasil.lirik = $$(b).find('span > p > span').text() +'\n' + $$(b).find('span > div > p > span').text()
+		   })
+	   })
+	   resolve(hasil)
+   })
+   .catch(reject)
+   })
+}
+
 function nekopoi(url) {
     return new Promise((resolve, reject) => {
     const hasil = {}
@@ -369,6 +391,24 @@ app.get('/api/fbdl', async (req, res) => {
 });
 
 // Endpoint TikTokDl
+app.get('/api/lirik', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await lirik(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { judul } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
 app.get('/api/toanime', async (req, res) => {
   try {
     const message = req.query.message;
@@ -379,7 +419,7 @@ app.get('/api/toanime', async (req, res) => {
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
-      data: { response } 
+      data: { input } 
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -433,7 +473,7 @@ app.get('/api/pinvideo', async (req, res) => {
     res.status(200).json({
       status: 200,
       creator: "Hyuu",
-      data: { response }
+      data: { t }
     });
   } catch (error) {
     res.status(500).json({ error: error.url });
