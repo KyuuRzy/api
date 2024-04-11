@@ -10,6 +10,7 @@ const FormData = require('form-data');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const httpsAgent = new HttpsProxyAgent('http://168.63.76.32:3128');
 const baseUrl = 'https://tools.betabotz.org';
+const https = require('https');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,55 @@ app.set("json spaces", 2);
 
 // Middleware untuk CORS
 app.use(cors());
+
+function remini = (imageData, operation) => {
+    return new Promise(async (resolve, reject) => {
+        const availableOperations = ["enhance", "recolor", "dehaze"];
+        if (availableOperations.includes(operation)) {
+            operation = operation;
+        } else {
+            operation = availableOperations[0];
+        }
+        const baseUrl = "https://inferenceengine.vyro.ai/" + operation + ".vyro";
+        const formData = new FormData();
+        formData.append("image", Buffer.from(imageData), { filename: "enhance_image_body.jpg", contentType: "image/jpeg" });
+        formData.append("model_version", 1, { "Content-Transfer-Encoding": "binary", contentType: "multipart/form-data; charset=utf-8" });
+
+        const options = {
+            method: 'POST',
+            hostname: 'inferenceengine.vyro.ai',
+            path: "/" + operation,
+            protocol: 'https:',
+            headers: {
+                'User-Agent': 'okhttp/4.9.3',
+                'Connection': 'Keep-Alive',
+                'Accept-Encoding': 'gzip',
+                ...formData.getHeaders()
+            }
+        };
+
+        const req = https.request(options, function (res) {
+            const chunks = [];
+            res.on("data", function (chunk) {
+                chunks.push(chunk);
+            });
+            res.on("end", function () {
+                resolve(Buffer.concat(chunks));
+            });
+            res.on("error", function (err) {
+                reject(err);
+            });
+        });
+
+        formData.pipe(req);
+
+        req.on('error', function (err) {
+            reject(err);
+        });
+
+        req.end();
+    });
+}
 
 function lirik(judul){
 	return new Promise(async(resolve, reject) => {
@@ -439,6 +489,24 @@ app.get('/api/nekopoi', async (req, res) => {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
     const response = await nekopoi(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { hasil } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/remini', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await remini(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
