@@ -12,6 +12,74 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+async function instadown(url) {
+	return new Promise(async (resolve, reject) => {
+		try {
+			var a = await axios.request("https://snapinsta.app/action2.php?lang=id", {
+				method: "POST",
+				headers: {
+					"user-agent": "Mozilla/5.0 (Linux; Android 11; V2038; Flow) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/359.0.0.288 Mobile Safari/537.36",
+					origin: 'https://snapinsta.app',
+					referer: 'https://snapinsta.app/',
+					Host: "snapinsta.app",
+					"content-type": "application/x-www-form-urlencoded",
+					accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+				},
+				data: new URLSearchParams({
+					url: url,
+					action: "post"
+				})
+			})
+			var decodeParams = a.data.split('))</script>')[0]
+				.split('decodeURIComponent(escape(r))}(')[1]
+				?.split(',')?.map(v => v.replace(/^"/, '')
+					.replace(/"$/, '').trim())
+			if (!Array.isArray(decodeParams) || decodeParams.length !== 6) return reject({
+				status: false,
+				message: `failed to parse decode params!\n${a.data}`
+			})
+
+			var decode = await decodeSnap(...decodeParams)
+			var result = decode?.split('("download").innerHTML = "')?.[1].split('; document.getElementById')[0].replaceAll("\\","")
+				log(result)
+			const $ = cheerio.load(result)
+
+			const results = []
+			$('.download-content').each(function() {
+				let thumbnail = $(this)
+					.find('.media-box > img[src]')
+					.attr('src')
+				if (!/https?:\/\//i.test(thumbnail)) thumbnail = 'https://snapinsta.app' + thumbnail
+				let url = $(this).find('.download-bottom > a[href]').attr('href')
+				if (!/https?:\/\//i.test(url || '')) {
+					url = encodeURI('https://snapinsta.app' + url)
+				}
+				if (url) results.push({
+					thumbnail,
+					url
+				})
+			})
+			return resolve({
+				status: true,
+				data: results
+			})
+		} catch (e) {
+			console.log(e)
+			if (e.response) {
+				return resolve({
+					status: false,
+					message: e.response.statusText
+				})
+			} else {
+				return resolve({
+					status: false,
+					message: e
+				})
+			}
+		}
+	})
+}
+
 function pinterestvideodownloader(t) {
   return new Promise(async (e, a) => {
     let i = new URLSearchParams();
@@ -129,6 +197,24 @@ async function blackboxAIChat(message) {
     throw error;
   }
 }
+
+// Endpoint PinVideo
+app.get('/api/insta', async (req, res) => {
+  try {
+    const url = req.query.url;
+    if (!url) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await instadown(url);
+    res.status(200).json({
+      status: 200,
+      creator: "Hyuu",
+      data: { response }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.url });
+  }
+});
 
 // Endpoint PinVideo
 app.get('/api/pinvideo', async (req, res) => {
