@@ -5,7 +5,7 @@ const axios = require('axios');
 const cheerio = require("cheerio");
 const crypto = required('crypto');
 
-const { HttpsProxyAgent } require('https-proxy-agent');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 const httpsAgent = new HttpsProxyAgent('http://168.63.76.32:3128');
 
 const app = express();
