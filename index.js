@@ -199,7 +199,7 @@ async function blackboxAIChat(message) {
 }
 
 // Endpoint PinVideo
-app.get('/api/instadown', async (req, res) => {
+app.get('/api/instadl', async (req, res) => {
   try {
     const url = req.query.url;
     if (!url) {
