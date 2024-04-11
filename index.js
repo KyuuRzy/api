@@ -4,7 +4,7 @@ const path = require('path');
 const axios = require('axios');
 const cheerio = require("cheerio");
 const crypto = require('crypto');
-
+const qs = require('qs');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const httpsAgent = new HttpsProxyAgent('http://168.63.76.32:3128');
 
