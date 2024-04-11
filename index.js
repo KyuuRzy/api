@@ -3,7 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const axios = require('axios');
 const cheerio = require("cheerio");
-const crypto = required('crypto');
+const crypto = require('crypto');
 
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const httpsAgent = new HttpsProxyAgent('http://168.63.76.32:3128');
