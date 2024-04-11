@@ -172,18 +172,18 @@ async function blackboxAIChat(message) {
 // Endpoint PinVideo
 app.get('/api/ssweb', async (req, res) => {
   try {
-    const url = req.query.url;
-    if (!url) {
+    const message = req.query.message;
+    if (!message) {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
-    const response = await ssweb(url);
+    const response = await ssweb(message);
     res.status(200).json({
       status: 200,
       creator: "Hyuu",
       data: { response }
     });
   } catch (error) {
-    res.status(500).json({ error: error.url });
+    res.status(500).json({ error: error.message });
   }
 });
 
