@@ -16,6 +16,33 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+async function facebook(url) {
+    return new Promise((resolve, reject) => {
+        axios({
+            url: 'https://aiovideodl.ml/',
+            method: 'GET',
+            headers: {
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "cookie": "PHPSESSID=69ce1f8034b1567b99297eee2396c308; _ga=GA1.2.1360894709.1632723147; _gid=GA1.2.1782417082.1635161653"
+            }
+        }).then((src) => {
+            let a = cheerio.load(src.data)
+            let token = a('#token').attr('value')
+            axios({
+                url: 'https://aiovideodl.ml/wp-json/aio-dl/video-data/',
+                method: 'POST',
+                headers: {
+                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                    "cookie": "PHPSESSID=69ce1f8034b1567b99297eee2396c308; _ga=GA1.2.1360894709.1632723147; _gid=GA1.2.1782417082.1635161653"   
+                },
+                data: new URLSearchParams(Object.entries({ 'url': link, 'token': token }))
+            }).then(({ data }) => {
+                resolve(data)
+            })
+        })
+    })
+}
+
 async function draw(input, options = { proxy: false, china: false }) {
     let obj = {
         busiId: options.china ? 'ai_painting_anime_img_entry' : 'different_dimension_me_img_entry',
@@ -202,6 +229,24 @@ async function blackboxAIChat(message) {
     throw error;
   }
 }
+
+// Endpoint TikTokDl
+app.get('/api/fbdl', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await facebook(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Endpoint TikTokDl
 app.get('/api/toanime', async (req, res) => {
