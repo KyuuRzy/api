@@ -92,7 +92,7 @@ async function blackboxAIChat(message) {
 }
 
 // Endpoint BingApi
-app.get('/api/doodstream', async (req, res) => {
+app.get('/api/spotify', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
