@@ -27,8 +27,7 @@ function quotes(input) {
 				})
 				data.splice(2, 1)
 				if (data.length == 0) return resolve({ creator: '@neoxr - Wildan Izzudin & @ariffb.id - Ariffb', status: false })
-				resolve({ creator: '@neoxr - Wildan Izzudin & @ariffb.id - Ariffb', status: true, data })
-			}).catch(reject)
+				resolve({})}).catch(reject)
 	})
 }
 
