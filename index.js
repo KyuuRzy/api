@@ -133,18 +133,18 @@ async function blackboxAIChat(message) {
 // Endpoint PinVideo
 app.get('/api/pinvideo', async (req, res) => {
   try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+    const url = req.query.url;
+    if (!url) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
-    const response = await pinterestvideodownloader(message);
+    const response = await pinterestvideodownloader(url);
     res.status(200).json({
-     status: 200,
-      creator: "KyuuRzy",
-      data: { response } 
+      status: 200,
+      creator: "Hyuu",
+      data: { response }
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.url });
   }
 });
 
@@ -153,7 +153,7 @@ app.get('/api/tiktokdl', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
     const response = await tiktokdl(message);
     res.status(200).json({
