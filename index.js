@@ -5,8 +5,11 @@ const axios = require('axios');
 const cheerio = require("cheerio");
 const crypto = require('crypto');
 const qs = require('qs');
+const Jimp = require('jimp');
+const FormData = require('form-data');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const httpsAgent = new HttpsProxyAgent('http://168.63.76.32:3128');
+const baseUrl = 'https://tools.betabotz.org';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -149,33 +152,35 @@ async function facebook(url) {
     })
 }
 
-async function draw(input, options = { proxy: false, china: false }) {
-    let obj = {
-        busiId: options.china ? 'ai_painting_anime_img_entry' : 'different_dimension_me_img_entry',
-        extra: JSON.stringify({
-            face_rects: [],
-            version: 2,
-            platform: 'web'
-        }),
-        images: [input.toString('base64')]
-    };
-    let resp = await axios({
-        method: 'post',
-        url: 'https://ai.tu.qq.com/overseas/trpc.shadow_cv.ai_processor_cgi.AIProcessorCgi/Process',
-        data: obj,
-        headers: {
-            'Origin': 'https://h5.tu.qq.com',
-            'Referer': 'https://h5.tu.qq.com/',
-            'x-sign-value': crypto.createHash('md5').update('https://h5.tu.qq.com' + JSON.stringify(obj).length + 'HQ31X02e').digest('hex'),
-            'x-sign-version': 'v1',
-        },
-        httpsAgent: options.proxy ? httpsAgent(options.proxy) : false
+async function draw(input) {
+  const image = await Jimp.read(input);
+  const buffer = await new Promise((resolve, reject) => {
+    image.getBuffer(Jimp.MIME_JPEG, (err, buf) => {
+      if (err) {
+        reject('Terjadi Error Saat Mengambil Data......');
+      } else {
+        resolve(buf);
+      }
     });
-    let { img_urls } = JSON.parse(await resp.data.extra);
-    return {
-        code: resp.data.code,
-        result: img_urls[0]
+  });
+  const form = new FormData();
+  form.append('image', buffer, { filename: 'toanime.jpg' });
+  try {
+    const { data } = await axios.post(`${baseUrl}/ai/toanime`, form, {
+      headers: {
+        ...form.getHeaders(),
+        'accept': 'application/json',
+      },
+    });
+    var res = {
+      image_data: data.result,
+      image_size: data.size
     };
+    return res;
+  } catch (error) {
+    console.error('Identifikasi Gagal:', error);
+    return 'Identifikasi Gagal';
+  }
 }
 
 
