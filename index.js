@@ -12,6 +12,30 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+function pinterestvideodownloader(t) {
+  return new Promise(async (e, a) => {
+    let i = new URLSearchParams();
+    i.append("url", t);
+    let o = await (
+      await fetch("https://pinterestvideodownloader.com/", {
+        method: "POST",
+        body: i,
+      })
+    ).text();
+    $ = cheerio.load(o);
+    let r = [];
+    if (
+      ($("table > tbody > tr").each(function (t, e) {
+        "" != $($(e).find("td")[0]).text() &&
+          r.push({ url: $($(e).find("td")[0]).find("a").attr("href") });
+      }),
+      0 == r.length)
+    )
+      return e({ status: !1 });
+    e({ status: !0, data: r });
+  });
+}
+
 function tiktokdl(URL) {
     return new Promise(async(resolve, rejecet) => {
         let { data } = await axios.request({
@@ -106,7 +130,25 @@ async function blackboxAIChat(message) {
   }
 }
 
-// Endpoint BingApi
+// Endpoint PinVideo
+app.get('/api/pinvideo', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+    }
+    const response = await pinterestvideodownloader(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
 app.get('/api/tiktokdl', async (req, res) => {
   try {
     const message = req.query.message;
