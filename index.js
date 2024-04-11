@@ -424,7 +424,7 @@ app.get('/api/toanime', async (req, res) => {
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
-      data: { input } 
+      data: { response } 
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
