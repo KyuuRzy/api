@@ -4,50 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:image" content="https://cdn.btch.bz/file/bf883f6c6704e63fd4e37.jpg">
-<title>kyuu Api's</title>
+<title>kyuu Api</title>
 <style>
 
   body {
-    border-radius: cover;
-    font-family: Arial, sans-serif;
     background-color: #ffffff;
-    color: #000000;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    background-repeat: no-repeat; 
+    background-size: cover; width: 100%;
   }
-.container {
-    width: 100%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-  }
-  
-  .container-l {
-    width: 100%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-  }
-  
-    .container-h {
-    width: 100%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    margin-bottom: 10px;
+  .container-h {
+    width: 95%;
+    padding: 0%;
+    background-color: ##191919;
+    box-shadow: 0 0 1%(0, 0, 0, 0.1);      
+    backdrop-filter: blur(1,5rem);
   }
   
   .loading {
@@ -110,22 +80,23 @@
     margin: 20px 20px 30px 20px;
     
     border-radius: 50%;
-  }
+      }
 .btn {
   display: block;
   width: calc(100% - 40px);
-  margin: 0 auto 20px; /* Menambahkan margin ke bawah sebesar 20px */
-  background-color: #0056b3;
-  color: #fff;
-  border: none;
+  margin: 0 auto 8px; /* Menambahkan margin ke bawah sebesar 20px */
+  background-color: #0056b3ff;
+  color: #fff;  
+  border: none;  
   padding: 10px;
   text-align: center;
   text-decoration: none;
-  font-size: 16px;
-  border-radius: 16px;
+  font-size: 13px;
+  border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
   .btn:hover {
     background-color: #0056b3;
   }
@@ -162,10 +133,12 @@
     
   }
   
+  
+  
     @keyframes bounce {
-    0%, 80%, 100% {
+    25%, 25%, 25% {
       transform: scale(0);}
-  40% {
+  80% {
     transform: scale(1);
   }
  }
@@ -180,8 +153,8 @@
   
             
   </div>
-  <input type="checkbox" onclick = "ubahMode()">
-  <h1>KyuuRzy Api's | Docs</h1>
+  <input type="checkbox"</a>
+  <h1>KyuuRzy Api | Docs</h1>
   <p>Welcome to the API documentation for our service. Below you will find information about the available endpoints and how to use them. I want to tell you something that this rest api was made from start to finish by GPT chat and I think that is very cool</p>
   
   <div class="container">
@@ -248,9 +221,8 @@
     <h1>in development</h1>
   <div class="btn-container">
     <a href="/api/ragbot?message=hai" class="btn">coming soom</a>
-
-          <p id="copyright">&copy; 𝟮𝟬𝟮𝟰 <a href="https://www.youtube.com/@YTKyuuTense">𝘒𝘺𝘶𝘶𝘙𝘻𝘺 𝘋𝘦𝘷</a>. 𝘈𝘭𝘭 𝘳𝘪𝘨𝘩𝘵𝘴 𝘳𝘦𝘴𝘦𝘳𝘷𝘦𝘥</p>
-  <script>
+    
+  <script>        
      function ubahMode() {
        const ubah = document.body;
        ubah.classList.toggle("dark");
