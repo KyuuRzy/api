@@ -20,7 +20,7 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-async Spotifysearch(query) {
+function Spotifysearch(query) {
     try {
         let url = await fetch('https://sa.caliph.eu.org/api/search/tracks?q=' + query, {
             method: 'GET',
