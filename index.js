@@ -43,28 +43,23 @@ resolve(hasil)
 })
 }
 
-function ghstalk(username){
-      return new Promise(async (resolve) => {
-         try {
-            let json = await Func.fetchJson('https://api.github.com/users/' + username)
-            if (typeof json.message != 'undefined') return resolve({
-               creator: "KyuuRzy",
-               status: false
-            })
-            resolve({
-               creator: "KyuuRzy",
-               status: true,
-               data: json
-            })
-         } catch (e) {
-            console.log(e)
-            return resolve({
-               creator: "KyuuRzy",
-               status: false
-            })
-         }
-      })
-}
+async function ghstalk(username) {
+        return new Promise(async (resolve, reject) => {
+            await axios
+                .get("https://api.github.com/users/" + username)
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    reject({
+                        status: 300,
+                        message: "request failed",
+                    });
+                });
+        });
+    };
+//Ghstalkbyrull
 
 async function npmstalk(packageName) {
   let stalk = await axios.get("https://registry.npmjs.org/"+packageName)
