@@ -21,6 +21,39 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+exports.igstalk = async (username) => {
+	return new Promise(async (resolve, reject) => {
+		let {
+			data
+		} = await axios('https://www.instagram.com/' + username + '/?__a=1', {
+			'method': 'GET',
+			'headers': {
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
+				'cookie': 'isi sendiri cokie igeh'
+			}
+		})
+		let user = data.graphql.user
+		let json = {
+			creator: '"hardianto02_',
+			status: 'ok',
+			code: 200,
+			username: user.username,
+			fullname: user.full_name,
+			verified: user.is_verified,
+			video_count_reel: user.highlight_reel_count,
+			followers: user.edge_followed_by.count,
+			follow: user.edge_follow.count,
+			is_bussines: user.is_business_account,
+			is_professional: user.is_professional_account,
+			category: user.category_name,
+			thumbnail: user.profile_pic_url_hd,
+			bio: user.biography,
+			info_account: data.seo_category_infos
+		}
+		resolve(json)
+	})
+}
+
 function quotesAnime() {
 return new Promise((resolve, reject) => {
 const page = Math.floor(Math.random() * 184)
@@ -502,6 +535,24 @@ app.get('/api/npmstalk', async (req, res) => {
   }
 });
 
+// Endpoint TikTokDl
+app.get('/api/igstalk', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await igstalk(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+	    
 // Endpoint PinVideo
 app.get('/api/ssweb', async (req, res) => {
   try {
