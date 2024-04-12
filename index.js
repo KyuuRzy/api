@@ -21,16 +21,6 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-async function cai(message) {
-try {
-const response = await fetch.post("https://apiruulzz.my.id/api/characterai", {
-messages: [{ query: message, id: null }],
-});
-return respone.data;
-} catch (error) {
-throw error;
-}}
-
 function quotesAnime() {
 return new Promise((resolve, reject) => {
 const page = Math.floor(Math.random() * 184)
@@ -412,24 +402,6 @@ app.get('/api/quotes', async (req, res) => {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
     const response = await quotes(message);
-    res.status(200).json({
-     status: 200,
-      creator: "KyuuRzy",
-      data: { response } 
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Endpoint TikTokDl
-app.get('/api/cai', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
-    }
-    const response = await cai(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
