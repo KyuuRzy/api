@@ -20,6 +20,29 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+function quotesAnime() {
+return new Promise((resolve, reject) => {
+const page = Math.floor(Math.random() * 184)
+axios.get('https://otakotaku.com/quote/feed/'+page)
+.then(({ data }) => {
+const $ = cheerio.load(data)
+const hasil = []
+$('div.kotodama-list').each(function(l, h) {
+hasil.push({
+link: $(h).find('a').attr('href'),
+gambar: $(h).find('img').attr('data-src'),
+karakter: $(h).find('div.char-name').text().trim(),
+anime: $(h).find('div.anime-title').text().trim(),
+episode: $(h).find('div.meta').text(),
+up_at: $(h).find('small.meta').text(),
+quotes: $(h).find('div.quote').text().trim()
+})
+})
+resolve(hasil)
+}).catch(reject)
+})
+}
+
 async function npmstalk(packageName) {
   let stalk = await axios.get("https://registry.npmjs.org/"+packageName)
   let versions = stalk.data.versions
@@ -398,13 +421,31 @@ app.get('/api/quotes', async (req, res) => {
 });
 
 // Endpoint TikTokDl
-app.get('/api/fbdl', async (req, res) => {
+app.get('/api/quotes', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
-    const response = await facebook(message);
+    const response = await quotes(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/quotesAnime', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await quotesAnime(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
