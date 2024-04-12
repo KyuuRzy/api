@@ -22,7 +22,7 @@ app.use(cors());
 
 async function cai(message) {
 try {
-const response = await axios.post("https://apiruulzz.my.id/api/characterai", {
+const response = await fetch.post("https://apiruulzz.my.id/api/characterai", {
 messages: [{ query: message, id: null }],
 });
 return respone.data;
