@@ -21,7 +21,7 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-exports.igstalk = async (username) => {
+function igstalk(username) {
 	return new Promise(async (resolve, reject) => {
 		let {
 			data
