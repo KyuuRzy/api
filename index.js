@@ -480,7 +480,7 @@ app.get('/api/npmstalk', async (req, res) => {
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
-      data: { hasil } 
+      data: { response } 
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
