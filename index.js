@@ -43,6 +43,29 @@ resolve(hasil)
 })
 }
 
+function ghstalk(username){
+      return new Promise(async (resolve) => {
+         try {
+            let json = await Func.fetchJson('https://api.github.com/users/' + username)
+            if (typeof json.message != 'undefined') return resolve({
+               creator: "KyuuRzy",
+               status: false
+            })
+            resolve({
+               creator: "KyuuRzy",
+               status: true,
+               data: json
+            })
+         } catch (e) {
+            console.log(e)
+            return resolve({
+               creator: "KyuuRzy",
+               status: false
+            })
+         }
+      })
+}
+
 async function npmstalk(packageName) {
   let stalk = await axios.get("https://registry.npmjs.org/"+packageName)
   let versions = stalk.data.versions
@@ -392,6 +415,24 @@ app.get('/api/twtdl', async (req, res) => {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
     const response = await twitter(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/ghstalk', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+    }
+    const response = await ghstalk(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
