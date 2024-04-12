@@ -20,53 +20,23 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-function remini(imageData, operation) {
-    return new Promise(async (resolve, reject) => {
-        const availableOperations = ["enhance", "recolor", "dehaze"];
-        if (availableOperations.includes(operation)) {
-            operation = operation;
-        } else {
-            operation = availableOperations[0];
-        }
-        const baseUrl = "https://inferenceengine.vyro.ai/" + operation + ".vyro";
-        const formData = new FormData();
-        formData.append("image", Buffer.from(imageData), { filename: "enhance_image_body.jpg", contentType: "image/jpeg" });
-        formData.append("model_version", 1, { "Content-Transfer-Encoding": "binary", contentType: "multipart/form-data; charset=utf-8" });
-
-        const options = {
-            method: 'POST',
-            hostname: 'inferenceengine.vyro.ai',
-            path: "/" + operation,
-            protocol: 'https:',
-            headers: {
-                'User-Agent': 'okhttp/4.9.3',
-                'Connection': 'Keep-Alive',
-                'Accept-Encoding': 'gzip',
-                ...formData.getHeaders()
-            }
-        };
-
-        const req = https.request(options, function (res) {
-            const chunks = [];
-            res.on("data", function (chunk) {
-                chunks.push(chunk);
-            });
-            res.on("end", function () {
-                resolve(Buffer.concat(chunks));
-            });
-            res.on("error", function (err) {
-                reject(err);
-            });
-        });
-
-        formData.pipe(req);
-
-        req.on('error', function (err) {
-            reject(err);
-        });
-
-        req.end();
-    });
+async function npmstalk(packageName) {
+  let stalk = await axios.get("https://registry.npmjs.org/"+packageName)
+  let versions = stalk.data.versions
+  let allver = Object.keys(versions)
+  let verLatest = allver[allver.length-1]
+  let verPublish = allver[0]
+  let packageLatest = versions[verLatest]
+  return {
+    name: packageName,
+    versionLatest: verLatest,
+    versionPublish: verPublish,
+    versionUpdate: allver.length,
+    latestDependencies: Object.keys(packageLatest.dependencies).length,
+    publishDependencies: Object.keys(versions[verPublish].dependencies).length,
+    publishTime: stalk.data.time.created,
+    latestPublishTime: stalk.data.time[verLatest]
+  }
 }
 
 function lirik(judul){
@@ -500,13 +470,13 @@ app.get('/api/nekopoi', async (req, res) => {
 });
 
 // Endpoint TikTokDl
-app.get('/api/remini', async (req, res) => {
+app.get('/api/npmstalk', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
-    const response = await remini(message);
+    const response = await npmstalk(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
