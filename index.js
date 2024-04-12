@@ -20,23 +20,6 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-function Spotifysearch(query) {
-    try {
-        let url = await fetch('https://sa.caliph.eu.org/api/search/tracks?q=' + query, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        let res = await url.json();
-        console.log(res)
-        return res; 
-    } catch (error) {
-        console.error(error); // Log any errors
-        return null; // Or handle the error appropriately
-    }
-}
-
 function quotesAnime() {
 return new Promise((resolve, reject) => {
 const page = Math.floor(Math.random() * 184)
@@ -427,24 +410,6 @@ app.get('/api/quotes', async (req, res) => {
       return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
     }
     const response = await quotes(message);
-    res.status(200).json({
-     status: 200,
-      creator: "KyuuRzy",
-      data: { response } 
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Endpoint TikTokDl
-app.get('/api/Spotifysearch', async (req, res) => {
-  try {
-    const message = req.query.message;
-    if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
-    }
-    const response = await Spotifysearch(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
