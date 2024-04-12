@@ -409,7 +409,7 @@ app.get('/api/ghstalk', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: kyyyxd' });
     }
     const response = await ghstalk(message);
     res.status(200).json({
@@ -427,7 +427,7 @@ app.get('/api/quotes', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: Malam' });
     }
     const response = await quotes(message);
     res.status(200).json({
@@ -445,7 +445,7 @@ app.get('/api/quotesAnime', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: naruto' });
     }
     const response = await quotesAnime(message);
     res.status(200).json({
@@ -463,7 +463,7 @@ app.get('/api/lirik', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: Drunk Text' });
     }
     const response = await lirik(message);
     res.status(200).json({
@@ -481,7 +481,7 @@ app.get('/api/toanime', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Where is the picture?' });
     }
     const response = await draw(message);
     res.status(200).json({
@@ -499,7 +499,7 @@ app.get('/api/nekopoi', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Where is the URL?' });
     }
     const response = await nekopoi(message);
     res.status(200).json({
@@ -517,7 +517,7 @@ app.get('/api/npmstalk', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: axios' });
     }
     const response = await npmstalk(message);
     res.status(200).json({
@@ -535,7 +535,7 @@ app.get('/api/igstalk', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: kyuurzyyy / username Instagram' });
     }
     const response = await igstalk(message);
     res.status(200).json({
@@ -553,7 +553,7 @@ app.get('/api/ssweb', async (req, res) => {
   try {
     const message = req.query.message;
     if (!message) {
-      return res.status(400).json({ error: 'Parameter "url" tidak ditemukan' });
+      return res.status(400).json({ error: 'Example: https://kyuurzy.my.id' });
     }
     const response = await ssweb(message);
     res.status(200).json({
