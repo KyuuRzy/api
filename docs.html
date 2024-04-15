@@ -1,240 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/docs">
-          <img src="https://avatars.githubusercontent.com/u/90571955?s=400&u=bc4f24d66d4fa3c6965ad52b97aa33c733628e19&v=4" class="rounded-circle shadow-4" style="width: 50px;" alt="Avatar" />
-          <div class="sidebar-brand-text mx-3">Erdwpe Rest API</div>
-        </a>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:image" content="https://cdn.btch.bz/file/bf883f6c6704e63fd4e37.jpg">
-<title>kyuu Api</title>
-<style>
-
-  body {
-    font-family: Arial, sans-serif;background-color: #f8f9fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
-  }
-  .container-h {
-    width: 101%;
-    padding: 0%;
-    background-color: ##191919;
-    box-shadow: 0 0 1%(0, 0, 0, 0.1);      
-    backdrop-filter: blur(1,5rem);
-  }
-  
-  .loading {
-    display: flex
-    
-  }
-  
-  .loading > div {
-    width: 2rem;
-    height: 2rem;
-    background-color: #ffd500;
-    margin: 1px;
-    border-radius: 50%;
-    top: 20px;
-    left: 20px;
-    animation: 1.5s bounce infinite ease-in-out;
-  }
-  
-
-  
-  h1 {
-    color: #007bff;
-    text-align: center;
-  }
-  
-  .copyright.h4 {
-   margin: 0, 20px, 1px, 0;
-  }
-  
-  h2 {
-    color: #343a40;
-    margin-top: 20px;
-    margin-right: 100px;
-    position: static;
-    margin-bottom: 20px; /* Tambahkan jarak antara tabel */
-    text-align: auto;
-    
-  }
-  p {
-    line-height: 1.6;
-    color: #000000;
-    text-align: justify;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  li {
-    margin-bottom: 10px;
-    color: #333333;
-  }
-  pre {
-    background-color: #f0f6ff;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
-  .btn-container {
-    margin: 20px 20px 30px 20px;
-    
-    border-radius: 50%;
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://cdn.btch.bz/file/bf883f6c6704e63fd4e37.jpg">
+    <title>KyuuRzy API's</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #191919;
+        color: #333;
+        margin: 0;
+        padding: 0;
       }
-.btn {
-  display: block;
-  width: calc(100% - 40px);
-  margin: 0 auto 8px; /* Menambahkan margin ke bawah sebesar 20px */
-  background-color: #0056b3ff;
-  color: #fff;  
-  border: none;  
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 13px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-  .btn:hover {
-    background-color: #0056b3;
-  }
-  input[type="checkbox"]{
-    position: relative;
-    width: 40px;
-    height: 20px;
-    appearance: none;
-    background-color: #434343;
-    outline: none;
-    border-radius: 10px;
-    transision: .5s ease;
-    cursor: pointer;
-  }
-  input[type="checkbox"]:checked{
-    background-color: #3664ffd;
-  }
-  input[type="checkbox"]::before{
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background-color: #fcfcfc;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-  }
-  input[type="checkbox"]:checked::before{
-    transform: translateX(20px);
-  }
-  .dark {
-    background-color: #999999;
-    color: #33ffff;
-    
-  }
-  
-  
-  
-    @keyframes bounce {
-    25%, 25%, 25% {
-      transform: scale(0);}
-  80% {
-    transform: scale(1);
-  }
- }
-</style>
-</head>
-<body>
-<div class="container-l">
-  <div class="loading">
-    <div class="dot-one"></div>
+      .container-h {
+        width: 100%;
+        padding: 0%;
+        background-color: #191919;
+        box-shadow: 0 0 1%(0, 0, 0, 0.1);
+        backdrop-filter: blur(1, 5rem);
+      }
+
+      .loading {
+        display: flex
+      }
+
+      .loading>div {
+        width: 2rem;
+        height: 2rem;
+        background-color: #ffd500;
+        margin: 1px;
+        border-radius: 50%;
+        top: 20px;
+        left: 20px;
+        animation: 1.5s bounce infinite ease-in-out;
+      }
+
+      h1 {
+        color: #007bff;
+        text-align: center;
+      }
+
+      .copyright.h4 {
+        margin: 0, 20px, 1px, 0;
+      }
+
+      h2 {
+        color: #343a40;
+        margin-top: 20px;
+        margin-right: 100px;
+        position: static;
+        margin-bottom: 20px;
+        /* Tambahkan jarak antara tabel */
+        text-align: auto;
+      }
+
+      p {
+        line-height: 1.6;
+        color: #000000;
+        text-align: justify;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+        color: #333333;
+      }
+
+      pre {
+        background-color: #f0f6ff;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+
+      .btn-container {
+        margin: 20px 20px 30px 20px;
+        border-radius: 50%;
+      }
+
+      .btn {
+        display: block;
+        width: calc(100% - 40px);
+        margin: 0 auto 8px;
+        /* Menambahkan margin ke bawah sebesar 20px */
+        background-color: #0056b3ff;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 13px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+      input[type="checkbox"] {
+        position: relative;
+        width: 40px;
+        height: 20px;
+        appearance: none;
+        background-color: #434343;
+        outline: none;
+        border-radius: 10px;
+        transision: .5s ease;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"]:checked {
+        background-color: #3664ffd;
+      }
+
+      input[type="checkbox"]::before {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background-color: #fcfcfc;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+      }
+
+      input[type="checkbox"]:checked::before {
+        transform: translateX(20px);
+      }
+
+      .dark {
+        background-color: #999999;
+        color: #33ffff;
+      }
+
+      @keyframes bounce {
+
+        25%,
+        25%,
+        25% {
+          transform: scale(0);
+        }
+
+        80% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-l">
+      <div class="loading">
+        <div class="dot-one"></div>
         <div class="dot-two"></div>
-            <div class="dot-three"></div>
-  
-            
-  </div>
-  <input type="checkbox"</a>
-  <h1>KyuuRzy Api | Docs</h1>
-  <p>Welcome to the API documentation for our service. Below you will find information about the available endpoints and how to use them. I want to tell you something that this rest api was made from start to finish by GPT chat and I think that is very cool</p>
-  
-  <div class="container">
-  <h2>Endpoints</h2>
-  <div class="container-h">
-    <h1>Artificial Intelegence</h1>
-  <div class="btn-container">
-    <a href="/api/ragbot?message=hai" class="btn">RagBot Ai</a>
-    <a href="/api/degreeguru?message=hai" class="btn">Degreeguru ai</a>
-    <a href="/api/pinecone?message=hai" class="btn">Pinecone Aio</a>
-    <a href="/api/smartcontract?message=hai" class="btn">Smartcontract Ai</a>
-    <a href="/api/blackboxAIChat?message=hai" class="btn">BlackBox Ai</a>
-    <a href="/api/cai?query=hai&id=3Lln4tP_SbI46QrFwvs4Y4GhqgZTIwPASYCxfPykeRA" class="btn">Character Ai</a>
-    </div>
-    </div>
-
-    <div class="container-h">
-    <h1>Downloader</h1>
-  <div class="btn-container">
-    <a href="/api/tiktokdl?message=https://vt.tiktok.com/ZSFpydYgU/" class="btn">TikTok V Download</a>
-    <a href="/api/fbdl?message=" class="btn">Facebook V Download</a>
-    <a href="/api/pinvideo?message=https://pin.it/4bVAmw6nZ" class="btn">Pin V Download</a>
-    <a href="/api/ssweb?message=" class="btn">Screenshot Web</a>
-    <a href="/api/twtdl?message=" class="btn">Twitter Download</a>
-    <a href="/api/igdl?message=https://www.instagram.com/reel/C2wZ5nwRz7m/?igsh=bHFocHZuc203dm4w" class="btn">Instagram Download</a>
-    <a href="/api/nekopoi?message=" class="btn">Nekopoi Download</a>
-    </div>
-    </div>
-
-    <div class="container-h">
-    <h1>Converter</h1>
-  <div class="btn-container">
-    <a href="/api/toanime?message=https://telegra.ph/file/be30a300ec7f0654d6255.png" class="btn">ToAnime</a>
-    <a href="/api/remini?message=https://telegra.ph/file/6b604cf26acbefbb8ed41.jpg" class="btn">Remini</a>
-    </div>
-    </div>
-
-    <div class="container-h">
-    <h1>Random</h1>
-  <div class="btn-container">
-    <a href="/api/quotes?message=malam" class="btn">quotes</a>
-    <a href="/api/quotesAnime?message=Luffy" class="btn">quotes Anime</a>
-    <a href="/api/lirik?message=pujaan hati" class="btn">Lyrics</a>
-    </div>
-    </div>
-
-    <div class="container-h">
-    <h1>Stalk</h1>
-  <div class="btn-container">
-    <a href="/api/npmstalk?message=axios" class="btn">Npm Stalk</a>
-    <a href="/api/ghstalk?message=kyyyxd" class="btn">Github Stalk</a>
-    <a href="/api/igstalk?message=kyuurzyyy" class="btn">Instagram Stalk</a>
-    </div>
-    </div>
-
-              <div class="col-md-6 py-3">
-                <div class="testi-content">
-                  <p></p>
-                  <div class="entry-footer">
-                  </div>
-                </div>
-    
-      <div class="container-h">
-    <h1>in development</h1>
-  <div class="btn-container">
-    <a href="/api/ragbot?message=hai" class="btn">coming soom</a>
-    
-  <script>        
-     function ubahMode() {
-       const ubah = document.body;
-       ubah.classList.toggle("dark");
-     
-     }
-    
-  </script>
-</body>
-  </html>
-  
+        <div class="dot-three"></div>
+      </div class="btn-container">
+      <h1>KyuuRzy Api | Docs</h1>
+      <p>Welcome to the API documentation for our service. Below you will find information about the available endpoints and how to use them. I want to tell you something that this rest api was made from start to finish by GPT chat and I think that is very cool</p>
+      <div class="container">
+        <h2>Endpoints</h2>
+        <div class="container-h">
+          <h1>Artificial Intelegence</h1>
+          <div class="btn-container">
+            <a href="/api/ragbot?message=hai" class="btn">RagBot Ai</a>
+            <a href="/api/degreeguru?message=hai" class="btn">Degreeguru ai</a>
+            <a href="/api/pinecone?message=hai" class="btn">Pinecone Aio</a>
+            <a href="/api/smartcontract?message=hai" class="btn">Smartcontract Ai</a>
+            <a href="/api/blackboxAIChat?message=hai" class="btn">BlackBox Ai</a>
+            <a href="/api/cai?query=hai&id=3Lln4tP_SbI46QrFwvs4Y4GhqgZTIwPASYCxfPykeRA" class="btn">Character Ai</a>
+          </div>
+        </div>
+        <div class="container-h">
+          <h1>Downloader</h1>
+          <div class="btn-container">
+            <a href="/api/tiktokdl?message=https://vt.tiktok.com/ZSFpydYgU/" class="btn">TikTok Download</a>
+            <a href="/api/fbdl?message=" class="btn">Facebook Download</a>
+            <a href="/api/pinvideo?message=https://pin.it/4bVAmw6nZ" class="btn">Pin Download</a>
+            <a href="/api/ssweb?message=" class="btn">Screenshot Web</a>
+            <a href="/api/twtdl?message=" class="btn">Twitter Download</a>
+            <a href="/api/igdl?message=https://www.instagram.com/reel/C2wZ5nwRz7m/?igsh=bHFocHZuc203dm4w" class="btn">Instagram Download</a>
+            <a href="/api/nekopoi?message=" class="btn">Nekopoi Download</a>
+          </div>
+        </div>
+        <div class="container-h">
+          <h1>Converter</h1>
+          <div class="btn-container">
+            <a href="/api/toanime?message=https://telegra.ph/file/be30a300ec7f0654d6255.png" class="btn">ToAnime</a>
+            <a href="/api/remini?message=https://telegra.ph/file/6b604cf26acbefbb8ed41.jpg" class="btn">Remini</a>
+          </div>
+        </div>
+        <div class="container-h">
+          <h1>Random</h1>
+          <div class="btn-container">
+            <a href="/api/quotes?message=malam" class="btn">quotes</a>
+            <a href="/api/quotesAnime?message=Luffy" class="btn">quotes Anime</a>
+            <a href="/api/lirik?message=pujaan hati" class="btn">Lyrics</a>
+          </div>
+        </div>
+        <div class="container-h">
+          <h1>Stalk</h1>
+          <div class="btn-container">
+            <a href="/api/npmstalk?message=axios" class="btn">Npm Stalk</a>
+            <a href="/api/ghstalk?message=kyyyxd" class="btn">Github Stalk</a>
+            <a href="/api/igstalk?message=kyuurzyyy" class="btn">Instagram Stalk</a>
+          </div>
+        </div>
+        <div class="col-md-6 py-3">
+          <div class="testi-content">
+            <p></p>
+            <div class="entry-footer"></div>
+          </div>
+          <div class="container-h">
+            <h1>in development</h1>
+            <div class="btn-container">
+              <a href="/api/ragbot?message=hai" class="btn">coming soom</a>
+              <script>
+                function ubahMode() {
+                  const ubah = document.body;
+                  ubah.classList.toggle("dark");
+                }
+              </script>
+  </body>
+</html>
