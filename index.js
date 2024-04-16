@@ -28,20 +28,16 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-async function askGPT(message) {
+function askGPT(message) {
 return new Promise(async (resolve, reject) => {
-  try {
     const baseUrll = 'https://aemt.me/prompt/gpt';
     const prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
     const query = `prompt=${prompt}&text=${text}`;
     const url = `${baseUrll}?${query}`;
     const chatgpt = await fetch(url).then(res => res.json());
     return chatgpt;
-  } catch (e) {
-    throw new Error('Internal server error!');
-  } 
 }
-		   }
+}
 
 function igdl(url) {
      return new Promise(async(resolve, reject) => {
