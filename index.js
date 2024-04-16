@@ -30,7 +30,7 @@ app.use(cors());
 async function askGPT(message) {
   try {
     const baseUurl = 'https://aemt.me/prompt/gpt';
-    const prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
+    const prompt = fs.readFileSync('./assests/prompt.txt', 'utf-8');
     const query = `prompt=${prompt}&text=${message}`;
     const urll = `${baseUurl}?${message}`;
     const chatgpt = await fetch(urll).then(res => res.json());
