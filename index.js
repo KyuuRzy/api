@@ -364,23 +364,24 @@ function pinterestvideodownloader(t) {
   });
 }
 
-function tiktokdl(URL) {
-    return new Promise(async(resolve, rejecet) => {
-        let { data } = await axios.request({
-            url: "https://lovetik.com/api/ajax/search",
-            method: "POST",
-            data: new URLSearchParams(Object.entries({ query: URL }))
-        })
-        let result = {
-            desc: data.desc,
-            author: data.author,
-            author_name: data.author_name,
-            cover: data.cover,
-            video: data.play_url,
-            audio: data.links[4].a || "".replace("https", "http")
-        }
-        resolve(result)
-    })
+async function tiktokdl(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let t = await axios("https://lovetik.com/api/ajax/search", { method: "post", data: new URLSearchParams(Object.entries({ query: url })) });
+
+      const result = {};
+      result.title = clean(t.data.desc);
+      result.author = clean(t.data.author);
+      result.nowm = await shortener((t.data.links[0].a || "").replace("https", "http"));
+      result.watermark = await shortener((t.data.links[1].a || "").replace("https", "http"));
+      result.audio = await shortener((t.data.links[2].a || "").replace("https", "http"));
+      result.thumbnail = await shortener(t.data.cover);
+      
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
 
 
