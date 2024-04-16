@@ -27,11 +27,11 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-async function askGPT(text) {
+async function askGPT(message) {
   try { 
     const baseUurl = 'https://aemt.me/prompt/gpt';
     const prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
-    const query = `prompt=${prompt}&text=${text}`;
+    const query = `prompt=${prompt}&text=${message}`;
     const url = `${baseUurl}?${query}`;
     const chatgpt = await fetch(url).then(res => res.json());
     return chatgpt;
