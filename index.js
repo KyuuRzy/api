@@ -30,14 +30,18 @@ app.use(cors());
 
 function askGPT(message) {
 return new Promise(async (resolve, reject) => {
-    const baseUrll = 'https://aemt.me/prompt/gpt';
-    const prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
-    const query = `prompt=${prompt}&text=${text}`;
-    const url = `${baseUrll}?${query}`;
-    const chatgpt = await fetch(url).then(res => res.json());
+	try {
+    let baseUrll = 'https://aemt.me/prompt/gpt';
+    let prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
+    let query = `prompt=${prompt}&text=${text}`;
+    let url = `${baseUrll}?${query}`;
+    let chatgpt = await fetch(url).then(res => res.json());
     return chatgpt;
-})
+} catch (e) {
+    console.error(e)
+    throw 'Not found ;-;'
 }
+}}
 
 function igdl(url) {
      return new Promise(async(resolve, reject) => {
