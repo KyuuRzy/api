@@ -13,6 +13,8 @@ const httpsAgent = new HttpsProxyAgent('http://168.63.76.32:3128');
 const baseUrl = 'https://tools.betabotz.org';
 const https = require('https');
 
+const clean = e => (e = e.replace(/(<br?\s?\/>)/gi, " \n")).replace(/(<([^>] )>)/gi, "");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.enable("trust proxy");
@@ -117,6 +119,23 @@ quotes: $(h).find('div.quote').text().trim()
 resolve(hasil)
 }).catch(reject)
 })
+}
+
+async function Spotifysearch(query) {
+    try {
+        let url = await fetch('https://sa.caliph.eu.org/api/search/tracks?q=' + query, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        let res = await url.json();
+        console.log(res)
+        return res; 
+    } catch (error) {
+        console.error(error); // Log any errors
+        return null; // Or handle the error appropriately
+    }
 }
 
 async function ghstalk(username) {
@@ -503,6 +522,24 @@ app.get('/api/igdl', async (req, res) => {
       return res.status(400).json({ error: 'Where is the Instagram URL?' });
     }
     const response = await igdl(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/spotifysearch', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'Where is the Instagram URL?' });
+    }
+    const response = await Spotifysearch(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
