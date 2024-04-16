@@ -15,6 +15,10 @@ const https = require('https');
 
 const clean = e => (e = e.replace(/(<br?\s?\/>)/gi, " \n")).replace(/(<([^>] )>)/gi, "");
 
+async function shortener(e) {
+  return e;
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.enable("trust proxy");
