@@ -27,6 +27,19 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
+async function askGPT(text) {
+  try { 
+    const baseUurl = 'https://aemt.me/prompt/gpt';
+    const prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
+    const query = `prompt=${prompt}&text=${text}`;
+    const url = `${baseUurl}?${query}`;
+    const chatgpt = await fetch(url).then(res => res.json());
+    return chatgpt;
+  } catch (e) {
+    throw new Error('Internal server error!');
+  } 
+}
+
 function igdl(url) {
      return new Promise(async(resolve, reject) => {
             let res = await axios("https://indown.io/");
@@ -652,6 +665,24 @@ app.get('/api/igstalk', async (req, res) => {
       return res.status(400).json({ error: 'Example: kyuurzyyy / username Instagram' });
     }
     const response = await igstalk(message);
+    res.status(200).json({
+     status: 200,
+      creator: "KyuuRzy",
+      data: { response } 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Endpoint TikTokDl
+app.get('/api/gptai', async (req, res) => {
+  try {
+    const message = req.query.message;
+    if (!message) {
+      return res.status(400).json({ error: 'where is the Facebook URL?' });
+    }
+    const response = await askGPT(message);
     res.status(200).json({
      status: 200,
       creator: "KyuuRzy",
