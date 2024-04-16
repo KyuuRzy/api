@@ -6,6 +6,7 @@ const cheerio = require("cheerio");
 const crypto = require('crypto');
 const fetch = require('node-fetch');
 const qs = require('qs');
+const fs = require('fs')
 const Jimp = require('jimp');
 const FormData = require('form-data');
 const { HttpsProxyAgent } = require('https-proxy-agent');
@@ -27,7 +28,7 @@ app.set("json spaces", 2);
 // Middleware untuk CORS
 app.use(cors());
 
-function askGPT(message) {
+async function askGPT(message) {
   try {
     const baseUurl = 'https://aemt.me/prompt/gpt';
     const promptt = fs.readFileSync('./lib/assets/prompt.txt')
