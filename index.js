@@ -36,7 +36,7 @@ return new Promise(async (resolve, reject) => {
     const url = `${baseUrll}?${query}`;
     const chatgpt = await fetch(url).then(res => res.json());
     return chatgpt;
-}
+})
 }
 
 function igdl(url) {
