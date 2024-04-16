@@ -31,7 +31,7 @@ async function askGPT(message) {
   try {
     const baseUurl = 'https://aemt.me/prompt/gpt';
     const promptt = fs.readFileSync('./lib/assets/prompt.txt')
-    const query = `prompt=${promptt}&text=${message}`;
+    const message = `prompt=${promptt}&text=${message}`;
     const urll = `${baseUurl}?${message}`;
     const chatgpt = await fetch(urll).then(res => res.json());
     return chatgpt;
