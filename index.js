@@ -28,12 +28,12 @@ app.set("json spaces", 2);
 app.use(cors());
 
 async function askGPT(message) {
-  try { 
+  try {
     const baseUurl = 'https://aemt.me/prompt/gpt';
     const prompt = fs.readFileSync('./lib/prompt.txt', 'utf-8');
     const query = `prompt=${prompt}&text=${message}`;
-    const url = `${baseUurl}?${query}`;
-    const chatgpt = await fetch(url).then(res => res.json());
+    const urll = `${baseUurl}?${message}`;
+    const chatgpt = await fetch(urll).then(res => res.json());
     return chatgpt;
   } catch (e) {
     throw new Error('Internal server error!');
