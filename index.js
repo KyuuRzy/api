@@ -41,7 +41,7 @@ return new Promise(async (resolve, reject) => {
     console.error(e)
     throw 'Not found ;-;'
 }
-}}
+})}
 
 function igdl(url) {
      return new Promise(async(resolve, reject) => {
